@@ -62,9 +62,9 @@ global.offer = (account, arg) =>
         output(account, false, "send", "state=" + status, '', false);
         account.community.acceptConfirmationForObject("identitySecret", offer.id, (err) => {
           var email = account.mail.replace(/[+].*/, '');
-          if (!fs.existsSync('share/' + email + '_token.json')) {
-            return output(account, false, 'offer', 'pending=' + offer.id);
-          }
+          //if (!fs.existsSync('share/' + email + '_token.json')) {
+          //  return output(account, false, 'offer', 'pending=' + offer.id);
+          //}
           ( get_gmail_confirmation = (attempt = 0) => {
             get_gmail(email, (err, gmails) => {
               var link = search_gmail(gmails, "https://steamcommunity.com/tradeoffer/"

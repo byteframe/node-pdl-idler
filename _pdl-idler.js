@@ -129,6 +129,15 @@ global.file = (account, arg) =>
       "json": true,
     }, (err, response, body = '', result = (body === '' ? true : body.success)) =>
       output(account, (!err || result ? false : true), arg[1],
+        SteamUser.EResult[result] + "=" + arg[0])));
+
+
+global.file = (account, arg) =>
+  login(account, "", () =>
+    account.community.httpRequestGet({
+      "uri": 'https://steamcommunity.com/sharedfiles/filedetails/?id=2201401963',
+    }, (err, response, body = '', result = (body === '' ? true : body.success)) =>
+      output(account, (!err || result ? false : true), arg[1],
         SteamUser.EResult[result] + "=" + arg[0])));// XXX accepts all offers. should check by no items lost
 global.receive_queue = (callback,targets,arg) =>
   callback(targets.map((target) => [ target, 'receive', arg ]));
@@ -193,9 +202,9 @@ global.offer = (account, arg) =>
         output(account, false, "send", "state=" + status, '', false);
         account.community.acceptConfirmationForObject("identitySecret", offer.id, (err) => {
           var email = account.mail.replace(/[+].*/, '');
-          if (!fs.existsSync('share/' + email + '_token.json')) {
-            return output(account, false, 'offer', 'pending=' + offer.id);
-          }
+          //if (!fs.existsSync('share/' + email + '_token.json')) {
+          //  return output(account, false, 'offer', 'pending=' + offer.id);
+          //}
           ( get_gmail_confirmation = (attempt = 0) => {
             get_gmail(email, (err, gmails) => {
               var link = search_gmail(gmails, "https://steamcommunity.com/tradeoffer/"
@@ -484,13 +493,13 @@ global.privacy = (account, arg) =>
     setTimeout(() => (
       privacy_time = new Date().getTime()+privacy_interval,
       account.community.profileSettings({
-        profile: arg.substr(0, 1),
-        comments: arg.substr(2, 1),
-        inventory: arg.substr(4, 1),
-        friendsList: arg.substr(4, 1),
-        gameDetails: arg.substr(8, 1),
-        playtime: (arg.substr(12, 1) == '1'),
-        inventoryGifts: (arg.substr(14, 1) == '1')
+        profile: 3,// arg.substr(0, 1),
+        comments: 3,//arg.substr(2, 1),
+        inventory: 3,//arg.substr(4, 1),
+        friendsList: 3,//arg.substr(6, 1),
+        gameDetails: 3,//arg.substr(8, 1),
+        playtime: 3,//(arg.substr(12, 1) == '1'),
+        inventoryGifts: 3,//(arg.substr(14, 1) == '1')
       }, (err) =>
         output(account, err, 'privacy', arg))
     ), privacy_time-new Date().getTime()));
@@ -1373,7 +1382,7 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
       "domain": "primarydataloop",
       "language": "en"
     });
-    account.tf2 = new TF2(account.user);
+    //account.tf2 = new TF2(account.user);
 
     // watch connection events
     account.user.client.on('error', (err) =>
@@ -1466,9 +1475,9 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
         "list=" + Object.keys(account.user.myFriends).length +
         ",nicks=" + Object.keys(account.user.myNicknames).length +
         ",url=" + account.user.vanityURL, "", false, "", false));
-    account.user.on('licenses', (licenses) => (
+    /*account.user.on('licenses', (licenses) => (
       account.user.licenses = licenses,
-      account.user.setOption("enablePicsCache", true)));
+      account.user.setOption("enablePicsCache", true)));*/
     account.appOwnershipCached = 0;
     account.gamesPlaying = [];
     account.user.on('appOwnershipCached', () => {
@@ -1490,7 +1499,7 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
       account.community.sessionID = sessionID,
       account.community.setCookies(cookies),
       output(account, false, "websession", "id=" + sessionID, '', false),
-      (account.appOwnershipCached >= 2) &&
+      //(account.appOwnershipCached >= 2) &&
         finish_login()));
     finish_login = () =>
       (typeof account.logged_in === 'undefined') && (
@@ -1565,7 +1574,7 @@ var version = "0.001"
   , SteamCommunity = require('steamcommunity')
   , SteamTradeOfferManager = require('steam-tradeoffer-manager')
   , TF2 = require('tf2')
-  , idler = JSON.parse(fs.readFileSync('E:\\AAA_MAFILES\\pdl-idler.json', 'utf8'));
+  , idler = JSON.parse(fs.readFileSync('G:\\AAA_MAFILES\\pdl-idler.json', 'utf8'));
 //##if (!fs.existsSync('share')) {
 //##  fs.mkdirSync('share');
 //##}
@@ -1573,15 +1582,15 @@ var version = "0.001"
 // check and/or authenticate gmail oauth2 secrets
 var emails = new Object();
 //##var files = fs.readdirSync("share/");
-var files = fs.readdirSync("D:\\Work\\node-byteframe\\share/");
+var files = fs.readdirSync("G:\\AAA_MAFILES/");
 (check_files = (f = 0) => {
   if (f != files.length) {
     if (!/.*_secret.json/.test(files[f])) {
       return check_files(f+1);
     }
-    var secret = JSON.parse(fs.readFileSync('D:\\Work\\node-byteframe\\share/' + files[f])).installed
+    var secret = JSON.parse(fs.readFileSync('G:\\AAA_MAFILES/' + files[f])).installed
       , email = files[f].slice(0,-12)
-      , file = 'share/' + email + '_token.json';
+      , file = 'G:\\AAA_MAFILES/' + email + '_token.json';
     emails[email] = new google.auth.OAuth2(secret.client_id,
       secret.client_secret, secret.redirect_uris[0]);
     if (fs.existsSync(file)) {
@@ -1709,6 +1718,8 @@ USAGE:
 201-232
 pdl-idler.bat $121-196 file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
 
-pdl-idler.bat $201-232 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
+pdl-idler.bat $1-32 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
+pdl-idler.bat $33-64 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
+pdl-idler.bat $65-96 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
 
 */

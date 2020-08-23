@@ -88,7 +88,7 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
       "domain": "primarydataloop",
       "language": "en"
     });
-    account.tf2 = new TF2(account.user);
+    //account.tf2 = new TF2(account.user);
 
     // watch connection events
     account.user.client.on('error', (err) =>
@@ -181,9 +181,9 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
         "list=" + Object.keys(account.user.myFriends).length +
         ",nicks=" + Object.keys(account.user.myNicknames).length +
         ",url=" + account.user.vanityURL, "", false, "", false));
-    account.user.on('licenses', (licenses) => (
+    /*account.user.on('licenses', (licenses) => (
       account.user.licenses = licenses,
-      account.user.setOption("enablePicsCache", true)));
+      account.user.setOption("enablePicsCache", true)));*/
     account.appOwnershipCached = 0;
     account.gamesPlaying = [];
     account.user.on('appOwnershipCached', () => {
@@ -205,7 +205,7 @@ global.login = (account, arg, callback = () => { proceed(); }) => {
       account.community.sessionID = sessionID,
       account.community.setCookies(cookies),
       output(account, false, "websession", "id=" + sessionID, '', false),
-      (account.appOwnershipCached >= 2) &&
+      //(account.appOwnershipCached >= 2) &&
         finish_login()));
     finish_login = () =>
       (typeof account.logged_in === 'undefined') && (
@@ -280,7 +280,7 @@ var version = "0.001"
   , SteamCommunity = require('steamcommunity')
   , SteamTradeOfferManager = require('steam-tradeoffer-manager')
   , TF2 = require('tf2')
-  , idler = JSON.parse(fs.readFileSync('E:\\AAA_MAFILES\\pdl-idler.json', 'utf8'));
+  , idler = JSON.parse(fs.readFileSync('G:\\AAA_MAFILES\\pdl-idler.json', 'utf8'));
 //##if (!fs.existsSync('share')) {
 //##  fs.mkdirSync('share');
 //##}
@@ -288,15 +288,15 @@ var version = "0.001"
 // check and/or authenticate gmail oauth2 secrets
 var emails = new Object();
 //##var files = fs.readdirSync("share/");
-var files = fs.readdirSync("D:\\Work\\node-byteframe\\share/");
+var files = fs.readdirSync("G:\\AAA_MAFILES/");
 (check_files = (f = 0) => {
   if (f != files.length) {
     if (!/.*_secret.json/.test(files[f])) {
       return check_files(f+1);
     }
-    var secret = JSON.parse(fs.readFileSync('D:\\Work\\node-byteframe\\share/' + files[f])).installed
+    var secret = JSON.parse(fs.readFileSync('G:\\AAA_MAFILES/' + files[f])).installed
       , email = files[f].slice(0,-12)
-      , file = 'share/' + email + '_token.json';
+      , file = 'G:\\AAA_MAFILES/' + email + '_token.json';
     emails[email] = new google.auth.OAuth2(secret.client_id,
       secret.client_secret, secret.redirect_uris[0]);
     if (fs.existsSync(file)) {

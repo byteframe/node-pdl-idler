@@ -10,13 +10,13 @@ global.privacy = (account, arg) =>
     setTimeout(() => (
       privacy_time = new Date().getTime()+privacy_interval,
       account.community.profileSettings({
-        profile: arg.substr(0, 1),
-        comments: arg.substr(2, 1),
-        inventory: arg.substr(4, 1),
-        friendsList: arg.substr(4, 1),
-        gameDetails: arg.substr(8, 1),
-        playtime: (arg.substr(12, 1) == '1'),
-        inventoryGifts: (arg.substr(14, 1) == '1')
+        profile: 3,// arg.substr(0, 1),
+        comments: 3,//arg.substr(2, 1),
+        inventory: 3,//arg.substr(4, 1),
+        friendsList: 3,//arg.substr(6, 1),
+        gameDetails: 3,//arg.substr(8, 1),
+        playtime: 3,//(arg.substr(12, 1) == '1'),
+        inventoryGifts: 3,//(arg.substr(14, 1) == '1')
       }, (err) =>
         output(account, err, 'privacy', arg))
     ), privacy_time-new Date().getTime()));
