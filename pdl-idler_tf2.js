@@ -1,4 +1,4 @@
-var TF2Language = require('C:\\Users\\byteframe\\AppData\\Roaming\\npm\\node_modules\\tf2\\language.js');
+var TF2Language = require('tf2/language.js');
 
 // wait until game coordinator sends/sent backpack, then (down)load schema
 var schema_url = '', schema_url_time = 0, schema = [];

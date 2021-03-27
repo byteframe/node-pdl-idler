@@ -24,14 +24,4 @@ those modules!
 USAGE:
   XXX see byteframe!
 
-
-
-
-201-232
-pdl-idler.bat $121-196 file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
-
-pdl-idler.bat $1-32 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
-pdl-idler.bat $33-64 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
-pdl-idler.bat $65-96 file=1896396076-subscribe file=1896396076-favorite file=1897850524-subscribe file=1897850524-favorite file=1908349515-subscribe file=1908349515-favorite file=1915514460-subscribe file=1915514460-favorite file=1918846789-subscribe file=1918846789-favorite file=1927046134-subscribe file=1927046134-favorite file=1949863963-subscribe file=1949863963-favorite file=1956639944-subscribe file=1956639944-favorite file=1966815885-subscribe file=1966815885-favorite file=1970279083-subscribe file=1970279083-favorite file=1987345945-subscribe file=1987345945-favorite disconnect
-
 */
